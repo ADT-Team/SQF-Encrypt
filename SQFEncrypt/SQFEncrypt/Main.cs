@@ -2,12 +2,15 @@
 using System.Collections;
 using System.IO;
 using System.Text;
+using System.Threading;
 using System.Windows.Forms;
 
 namespace SQFEncrypt
 {
     public partial class Main : Form
     {
+        private static StreamWriter encryptedFile;
+
         public Main()
         {
             InitializeComponent();
@@ -20,6 +23,7 @@ namespace SQFEncrypt
             public static string pVarName { get; set; }
             public static string fileRead { get; set; }
             public static string asciiStr { get; set; }
+            public static string toString { get; set; }
         }
 
         //Browse Btn
@@ -53,22 +57,16 @@ namespace SQFEncrypt
                 GlobVars.asciiStr = "";
                 foreach (byte b in System.Text.Encoding.UTF8.GetBytes(GlobVars.fileRead.ToCharArray()))
                 {
-                    if (!(string.IsNullOrWhiteSpace(EncryptNumBox.Text)))
+                    int numPlus = GlobVars.encryptNum;
+                    if ((string.IsNullOrWhiteSpace(EncryptNumBox.Text)))
                     {
-                        int numPlus = GlobVars.encryptNum + b;
-                        GlobVars.asciiStr = GlobVars.asciiStr + numPlus;
-                        if (count < asciiCount - 1)
-                        {
-                            GlobVars.asciiStr = GlobVars.asciiStr + ",";
-                        }
+                        numPlus = 0;
                     }
-                    else
+                    int num = b + numPlus;
+                    GlobVars.asciiStr = GlobVars.asciiStr + num;
+                    if (count < asciiCount - 1)
                     {
-                        GlobVars.asciiStr = GlobVars.asciiStr + b.ToString();
-                        if (count < asciiCount - 1)
-                        {
-                            GlobVars.asciiStr = GlobVars.asciiStr + ",";
-                        }
+                        GlobVars.asciiStr = GlobVars.asciiStr + ",";
                     }
                     count = count + 1;
                 }
@@ -83,6 +81,11 @@ namespace SQFEncrypt
             {
                 Clipboard.SetText(GlobVars.asciiStr);
             }
+            if (saveFileCheck.Checked)
+            {
+                saveScript();
+            }
+
         }
 
         //Generate Pvar Btn
@@ -160,6 +163,46 @@ namespace SQFEncrypt
                     GlobVars.fileRead = GlobVars.fileRead + curLine;
                 }
             }
+            file.Close();
+        }
+
+        public void saveScript()
+        {
+            if ((string.IsNullOrWhiteSpace(EncryptNumBox.Text)))
+            {
+                GlobVars.encryptNum = 0;
+            }
+
+            if ((string.IsNullOrWhiteSpace(PvarNameBox.Text)))
+            {
+                MessageBox.Show("You have not assigned a public variable name. \nPlease do so and click encrypt again to save your file", "You went full Retard", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+            else
+            {
+                if (overwriteCheck.Checked)
+                {
+                    string toString = "";
+                    toString = toString + "_codeToRun = [];\n{\n";
+                    toString = toString + "_num = _x - " + GlobVars.pVarName + ";\n";
+                    toString = toString + "_codeToRun pushBack _num;\n";
+                    toString = toString + "} forEach _code;\n";
+                    toString = toString + "call compile toString _codeToRun;";
+
+                    //remove all the prevous content of the file
+                    string write = GlobVars.asciiStr + toString;
+                    System.IO.File.WriteAllText(GlobVars.inputFile, string.Empty);
+                    using (StreamWriter writer = new StreamWriter(GlobVars.inputFile, true))
+                        writer.Write(write);
+                }
+                else
+                {
+                    string filePath = System.IO.Path.GetDirectoryName(GlobVars.inputFile);
+                    string fileName = System.IO.Path.GetFileName(GlobVars.inputFile);
+                    fileName = fileName.Substring(0, fileName.Length - 4);
+                    encryptedFile = new System.IO.StreamWriter(filePath + @"\" + fileName + "-Encrypted.sqf");
+                }
+                MessageBox.Show("File Saved","Sucess", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            }
         }
 
         private void EncryptNumBox_TextChanged(object sender, EventArgs e)
@@ -179,6 +222,12 @@ namespace SQFEncrypt
                     int EncryptNum = int.Parse(EncryptNumS);
                     GlobVars.encryptNum = EncryptNum;
                 }
+            }
+            if(EncryptNumBox.Text.Length >= 6)
+            {
+                MessageBox.Show("It Seems you are trying to cause a stack overflow ... \nOr just like big numbers","Just No", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                EncryptNumBox.Text = EncryptNumBox.Text.Substring(0, EncryptNumBox.Text.Length - 1);
+                EncryptNumBox.SelectionStart = EncryptNumBox.Text.Length;
             }
         }
 
@@ -202,5 +251,12 @@ namespace SQFEncrypt
                 GlobVars.inputFile = FileInputBox.Text;
             }
         }
+
+        private void overwriteCheck_CheckedChanged(object sender, EventArgs e)
+        {
+            if ((overwriteCheck.Checked) && (!saveFileCheck.Checked)) {
+                MessageBox.Show("This will haver no effect until you check Save To File","You Went Full Retard",MessageBoxButtons.OK, MessageBoxIcon.Information);
+            }
+        }   
     }
 }

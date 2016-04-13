@@ -42,6 +42,8 @@
             this.GenToStringBtn = new System.Windows.Forms.Button();
             this.CopyToClipboardCheck = new System.Windows.Forms.CheckBox();
             this.stripComments = new System.Windows.Forms.CheckBox();
+            this.saveFileCheck = new System.Windows.Forms.CheckBox();
+            this.overwriteCheck = new System.Windows.Forms.CheckBox();
             this.SuspendLayout();
             // 
             // label1
@@ -146,7 +148,7 @@
             // CopyToClipboardCheck
             // 
             this.CopyToClipboardCheck.AutoSize = true;
-            this.CopyToClipboardCheck.Location = new System.Drawing.Point(241, 285);
+            this.CopyToClipboardCheck.Location = new System.Drawing.Point(222, 285);
             this.CopyToClipboardCheck.Name = "CopyToClipboardCheck";
             this.CopyToClipboardCheck.Size = new System.Drawing.Size(169, 17);
             this.CopyToClipboardCheck.TabIndex = 11;
@@ -156,12 +158,33 @@
             // stripComments
             // 
             this.stripComments.AutoSize = true;
-            this.stripComments.Location = new System.Drawing.Point(241, 302);
+            this.stripComments.Location = new System.Drawing.Point(222, 318);
             this.stripComments.Name = "stripComments";
             this.stripComments.Size = new System.Drawing.Size(153, 17);
             this.stripComments.TabIndex = 12;
             this.stripComments.Text = "Strip Comments From Code";
             this.stripComments.UseVisualStyleBackColor = true;
+            // 
+            // saveFileCheck
+            // 
+            this.saveFileCheck.AutoSize = true;
+            this.saveFileCheck.Location = new System.Drawing.Point(222, 302);
+            this.saveFileCheck.Name = "saveFileCheck";
+            this.saveFileCheck.Size = new System.Drawing.Size(89, 17);
+            this.saveFileCheck.TabIndex = 13;
+            this.saveFileCheck.Text = "Save To  File";
+            this.saveFileCheck.UseVisualStyleBackColor = true;
+            // 
+            // overwriteCheck
+            // 
+            this.overwriteCheck.AutoSize = true;
+            this.overwriteCheck.Location = new System.Drawing.Point(317, 302);
+            this.overwriteCheck.Name = "overwriteCheck";
+            this.overwriteCheck.Size = new System.Drawing.Size(71, 17);
+            this.overwriteCheck.TabIndex = 14;
+            this.overwriteCheck.Text = "Overwrite";
+            this.overwriteCheck.UseVisualStyleBackColor = true;
+            this.overwriteCheck.CheckedChanged += new System.EventHandler(this.overwriteCheck_CheckedChanged);
             // 
             // Main
             // 
@@ -169,6 +192,8 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.SystemColors.Control;
             this.ClientSize = new System.Drawing.Size(527, 348);
+            this.Controls.Add(this.overwriteCheck);
+            this.Controls.Add(this.saveFileCheck);
             this.Controls.Add(this.stripComments);
             this.Controls.Add(this.CopyToClipboardCheck);
             this.Controls.Add(this.GenToStringBtn);
@@ -207,6 +232,8 @@
         private System.Windows.Forms.Button GenToStringBtn;
         private System.Windows.Forms.CheckBox CopyToClipboardCheck;
         private System.Windows.Forms.CheckBox stripComments;
+        private System.Windows.Forms.CheckBox saveFileCheck;
+        private System.Windows.Forms.CheckBox overwriteCheck;
     }
 }
 
