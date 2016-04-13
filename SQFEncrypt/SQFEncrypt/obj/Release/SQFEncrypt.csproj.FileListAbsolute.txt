@@ -1,0 +1,9 @@
+c:\users\darren\documents\visual studio 2015\Projects\SQFEncrypt\SQFEncrypt\bin\Release\SQFEncrypt.exe.config
+c:\users\darren\documents\visual studio 2015\Projects\SQFEncrypt\SQFEncrypt\bin\Release\SQFEncrypt.exe
+c:\users\darren\documents\visual studio 2015\Projects\SQFEncrypt\SQFEncrypt\bin\Release\SQFEncrypt.pdb
+c:\users\darren\documents\visual studio 2015\Projects\SQFEncrypt\SQFEncrypt\obj\Release\SQFEncrypt.csprojResolveAssemblyReference.cache
+c:\users\darren\documents\visual studio 2015\Projects\SQFEncrypt\SQFEncrypt\obj\Release\SQFEncrypt.Main.resources
+c:\users\darren\documents\visual studio 2015\Projects\SQFEncrypt\SQFEncrypt\obj\Release\SQFEncrypt.Properties.Resources.resources
+c:\users\darren\documents\visual studio 2015\Projects\SQFEncrypt\SQFEncrypt\obj\Release\SQFEncrypt.csproj.GenerateResource.Cache
+c:\users\darren\documents\visual studio 2015\Projects\SQFEncrypt\SQFEncrypt\obj\Release\SQFEncrypt.exe
+c:\users\darren\documents\visual studio 2015\Projects\SQFEncrypt\SQFEncrypt\obj\Release\SQFEncrypt.pdb
