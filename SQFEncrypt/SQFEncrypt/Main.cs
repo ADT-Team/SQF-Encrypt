@@ -255,7 +255,7 @@ namespace SQFEncrypt
         private void overwriteCheck_CheckedChanged(object sender, EventArgs e)
         {
             if ((overwriteCheck.Checked) && (!saveFileCheck.Checked)) {
-                MessageBox.Show("This will haver no effect until you check Save To File","You Went Full Retard",MessageBoxButtons.OK, MessageBoxIcon.Information);
+                MessageBox.Show("This will have no effect until you check Save To File","You Went Full Retard",MessageBoxButtons.OK, MessageBoxIcon.Information);
             }
         }   
     }
