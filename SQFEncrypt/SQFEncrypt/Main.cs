@@ -109,6 +109,7 @@ namespace SQFEncrypt
                 string toString = "";
                 toString = toString + "_codeToRun = [];\n{\n";
                 toString = toString + "_num = _x - " + GlobVars.pVarName + ";\n";
+                toString = toString + "_codeToRun pushBack _num;\n";
                 toString = toString + "} forEach _code;\n";
                 toString = toString + "call compile toString _codeToRun;";
                 Clipboard.SetText(toString);
