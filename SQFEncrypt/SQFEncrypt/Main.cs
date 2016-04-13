@@ -168,6 +168,13 @@ namespace SQFEncrypt
 
         public void saveScript()
         {
+
+            string toString = "";
+            toString = toString + "_codeToRun = [];\n{\n";
+            toString = toString + "_num = _x - " + GlobVars.pVarName + ";\n";
+            toString = toString + "_codeToRun pushBack _num;\n";
+            toString = toString + "} forEach _code;\n";
+            toString = toString + "call compile toString _codeToRun;";
             if ((string.IsNullOrWhiteSpace(EncryptNumBox.Text)))
             {
                 GlobVars.encryptNum = 0;
@@ -181,13 +188,6 @@ namespace SQFEncrypt
             {
                 if (overwriteCheck.Checked)
                 {
-                    string toString = "";
-                    toString = toString + "_codeToRun = [];\n{\n";
-                    toString = toString + "_num = _x - " + GlobVars.pVarName + ";\n";
-                    toString = toString + "_codeToRun pushBack _num;\n";
-                    toString = toString + "} forEach _code;\n";
-                    toString = toString + "call compile toString _codeToRun;";
-
                     //remove all the prevous content of the file
                     string write = GlobVars.asciiStr + toString;
                     System.IO.File.WriteAllText(GlobVars.inputFile, string.Empty);
@@ -200,6 +200,13 @@ namespace SQFEncrypt
                     string fileName = System.IO.Path.GetFileName(GlobVars.inputFile);
                     fileName = fileName.Substring(0, fileName.Length - 4);
                     encryptedFile = new System.IO.StreamWriter(filePath + @"\" + fileName + "-Encrypted.sqf");
+                    encryptedFile.Close();
+
+                    //remove all the prevous content of the file
+                    string write = GlobVars.asciiStr + toString;
+                    using (StreamWriter writer = new StreamWriter(filePath + @"\" + fileName + "-Encrypted.sqf", true))
+                        writer.Write(write);
+
                 }
                 MessageBox.Show("File Saved","Sucess", MessageBoxButtons.OK, MessageBoxIcon.Information);
             }
